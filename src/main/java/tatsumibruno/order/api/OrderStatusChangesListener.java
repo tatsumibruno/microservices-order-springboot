@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Component
@@ -12,6 +13,7 @@ public class OrderStatusChangesListener {
 
     private final OrderRepository orderRepository;
 
+    @Transactional
     @StreamListener(OrderChannels.ORDERS_CHANGES)
     public void listen(OrderStatusChange statusChange) {
         log.info("Receiving status update on order {}. New status: {}", statusChange.getCode(), statusChange.getStatus());

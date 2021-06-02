@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.support.MessageBuilder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ public class OrderController {
     private final OrderChannels orderChannels;
 
     @PostMapping
+    @Transactional
     public ResponseEntity<OrderDTO> post(@RequestBody @Valid CreateOrderRequest orderRequest) {
         log.info("Receiving new order: {}", orderRequest);
         final OrderCustomer orderCustomer = orderRequest.toOrderCustomer();
