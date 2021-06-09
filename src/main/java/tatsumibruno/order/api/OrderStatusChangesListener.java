@@ -6,6 +6,8 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -19,7 +21,8 @@ public class OrderStatusChangesListener {
         log.info("Receiving status update on order {}. New status: {}", statusChange.getCode(), statusChange.getStatus());
         orderRepository.findByCode(statusChange.getCode())
                 .ifPresentOrElse(order -> {
-                    order.update(statusChange.getStatus(), statusChange.getTimestamp());
+//                    order.update(statusChange.getStatus(), statusChange.getTimestamp());
+                    order.update(statusChange.getStatus(), ZonedDateTime.now());
                     log.info("Order {} updated successfully with status {}", statusChange.getCode(), statusChange.getStatus());
                 }, () -> log.warn("Not found order {}", statusChange.getCode()));
     }

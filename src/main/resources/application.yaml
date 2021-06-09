@@ -3,6 +3,7 @@ spring:
     name: orders-springboot
   cloud:
     stream:
+      instanceCount: 10
       bindings:
         orders-created:
           binder: kafka
@@ -18,7 +19,6 @@ spring:
           orders-created:
             producer:
               partitioned: true
-              partitionCount: 1
               transacted: true
           orders-changes:
             group: orders-springboot
@@ -27,11 +27,14 @@ spring:
               enableDlq: true
   datasource:
     driver-class-name: org.postgresql.Driver
+#    url: jdbc:postgresql://SG-orders-2020-pgsql-master.servers.mongodirector.com:5432/orders_api_2?reWriteBatchedInserts=true
+#    username: sgpostgres
+#    password: oiJWMV&Ev4E0PFaf
     url: jdbc:postgresql://localhost:5432/orders_api_2?reWriteBatchedInserts=true
     username: postgres
     password: postgres
     hikari:
-      maximum-pool-size: 20
+      maximum-pool-size: 40
       auto-commit: false
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
