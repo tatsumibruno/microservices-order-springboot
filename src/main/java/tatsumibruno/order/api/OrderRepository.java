@@ -9,6 +9,7 @@ import java.util.UUID;
 public interface OrderRepository extends Repository<Order, Long> {
 
     void save(Order order);
+
     @EntityGraph(attributePaths = "history", type = EntityGraph.EntityGraphType.FETCH)
     Optional<Order> findByCode(UUID code);
 }
