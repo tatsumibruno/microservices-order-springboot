@@ -20,6 +20,8 @@ spring:
         orders-changes:
           binder: rabbit
           group: orders-springboot
+          consumer:
+            concurrency: 5
       rabbit:
         bindings:
           orders-created:
@@ -31,6 +33,7 @@ spring:
             consumer:
               durableSubscription: true
               autoBindDlq: true
+              maxConcurrency: 5
 #  cloud:
 #    stream:
 #      instanceCount: 10
